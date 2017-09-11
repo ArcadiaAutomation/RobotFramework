@@ -1,0 +1,80 @@
+*** Settings ***
+Library           AppiumLibrary    timeout=120    run_on_failure=Nothing
+Library           String
+Library           Collections
+Library           OperatingSystem
+Variables         ${Lang}    ${ar_Lang}
+
+*** Keywords ***
+Mobile Click Element
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Click element identified by locator.
+    ...    Key attributes for arbitrary elements are index and name. See introduction for details about locating elements.
+    AppiumLibrary.Wait Until Element Is Visible    ${locator}    ${timeout}
+    AppiumLibrary.Click Element    ${locator}
+
+Mobile Element Attribute Should Match
+    [Arguments]    ${locator}    ${attrName}    ${pattern}    ${regexp}="False"    ${timeout}=${lo_general_timeout}
+    [Documentation]    Verify that an attribute of an element matches the expected criteria.
+    ...    The element is identified by locator. See introduction for details about locating elements. If more than one element matches, the first element is selected.
+    ...    The attr_name is the name of the attribute within the selected element.
+    ...    The match_pattern is used for the matching, if the match_pattern is
+    ...    boolean or 'True'/'true'/'False'/'false' String then a boolean match is applied
+    ...    any other string is cause a string match
+    ...    The regexp defines whether the string match is done using regular expressions (i.e. BuiltIn Library's Should Match Regexp or string pattern match (i.e. BuiltIn Library's Should Match)
+    ...
+    ...    Examples:
+    ...    Element Attribute Should Match xpath = //*[contains(@text,'foo')] text *foobar
+    ...    Element Attribute Should Match xpath = //*[contains(@text,'foo')] text f.*ar regexp = True
+    ...    Element Attribute Should Match xpath = //*[contains(@text,'foo')] enabled True
+    ...
+    ...    1. is a string pattern match i.e. the 'text' attribute should end with the string 'foobar'
+    ...    2. is a regular expression match i.e. the regexp 'f.*ar' should be within the 'text' attribute
+    ...    3. is a boolead match i.e. the 'enabled' attribute should be True
+    AppiumLibrary.Wait Until Element Is Visible    ${locator}    ${timeout}
+    AppiumLibrary.Element Attribute Should Match    ${locator}    ${attrName}    ${pattern}    ${regexp}
+
+Mobile Element Name Should Be
+    [Arguments]    ${locator}    ${expected}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Verifies element identified by locator contains name expected.
+    AppiumLibrary.Wait Until Element Is Visible    ${locator}    ${timeout}
+    AppiumLibrary.Element Name Should Be    ${locator}    ${expected}
+
+Mobile Element Text Should Be
+    [Arguments]    ${locator}    ${expected}    ${errorMessage}="Default"    ${timeout}=${lo_general_timeout}
+    [Documentation]    Verifies element identified by locator contains text expected.
+    ...    If you wish to assert an exact (not a substring) match on the text of the element, use Element Text Should Be.
+    ...    Key attributes for arbitrary elements are id and xpath. message can be used to override the default error message.
+    ...    New in AppiumLibrary 1.4.
+    AppiumLibrary.Wait Until Element Is Visible    ${locator}    ${timeout}
+    Run Keyword If    "${errorMessage}"=="Default"    AppiumLibrary.Element Name Should Be    ${locator}    ${expected}
+    ...    ELSE    AppiumLibrary.Element Name Should Be    ${locator}    ${expected}    ${errorMessage}
+
+Mobile Get Element Attribute
+    [Arguments]    ${locator}    ${expected}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Get element attribute using given attribute: name, value,...
+    ...    Examples:
+    ...    Get Element Attribute locator name
+    ...    Get Element Attribute locator value
+    AppiumLibrary.Wait Until Element Is Visible    ${locator}    ${timeout}
+    AppiumLibrary.Get Element Attribute    ${locator}    ${expected}
+
+Mobile Get Text
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Get element text (for hybrid and mobile browser use xpath locator, others might cause problem)
+    ...    Example:
+    ...    ${text} Get Text //*[contains(@text,'foo')]
+    ...    New in AppiumLibrary 1.4.
+    AppiumLibrary.Wait Until Element Is Visible    ${locator}    ${timeout}
+    ${text}=    AppiumLibrary.Get Text    ${locator}
+    [Return]    ${text}
+
+Mobile Input Text
+    [Arguments]    ${locator}    ${text}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Types the given text into text field identified by locator.
+    ...    See introduction for details about locating elements.
+    AppiumLibrary.Wait Until Element Is Visible    ${locator}    ${timeout}
+    AppiumLibrary.Input Text    ${locator}    ${text}
+
+Mobile Open Application
+    [Arguments]    ${remoteURL}    ${platfromName}    ${platFromVersion}    ${deviceName}    ${appPackage}    ${appActivity}
