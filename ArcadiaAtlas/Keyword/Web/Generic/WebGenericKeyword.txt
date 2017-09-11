@@ -1,2 +1,74 @@
 *** Settings ***
 Resource          ../../../Common/RedefineWebKeyword.txt
+
+*** Keywords ***
+Web Verify Current Url
+    [Arguments]    ${url}
+    ${currentUrl}=    Get Location
+    log    Actual Url is : ${currentUrl}
+    log    Expect Url is : ${url}
+    Selenium2Library.Location Should Be    ${url}
+
+Web Capture Screen At Verify Point
+    [Arguments]    ${verifyPointName}    ${serialNumber}=${EMPTY}
+    @{splitCodeTestCase}    Split String    ${TEST_NAME}    ]
+    log    @{splitCodeTestCase}[0]
+    ${codeTestCase}    Set Variable    @{splitCodeTestCase}[0]
+    @{suit}=    Split String    ${SUITE_NAME}    .
+    @{env}=    Split String    ${SUITE_NAME}    .
+    ${result}=    Wait Until Keyword Succeeds    3x    1s    Selenium2Library.Capture Page Screenshot    ${codeTestCase}_${ar_LANG}_@{env}[-5]_@{suit}[-2]_${verifyPointName}.png
+    log    ${result}
+
+web select window
+    [Arguments]    ${locator}    ${strategy}=url    ${timeout}=${lo_general_timeout}
+    [Documentation]    Strategy have 3 type
+    ...
+    ...    name , title , url
+    Wait Until Keyword Succeeds    3s    ${timeout}=${lo_general_timeout}    Select Window    ${strategy}=${locator}
+
+Web select window by strategy
+    [Arguments]    ${locator}    ${strategy}=url    ${timeout}=${lo_general_timeout}
+    [Documentation]    Strategy have 3 type
+    ...
+    ...    name , title , url
+    Run Keyword If    "${strategy}"=="url"    web select window    url    ${locator}
+    ...    ELSE IF    "${strategy}"=="title"    web select window    title    ${locator}
+    ...    ELSE IF    "${strategy}"=="name"    web select window    name    ${locator}
+    ...    ELSE    fail    Input wrong Strategy
+
+Web Select Window By Name
+    [Arguments]    ${locator}
+    Web select window by strategy    ${locator}    name
+
+Web Select Window By Title
+    [Arguments]    ${locator}
+    Web select window by strategy    ${locator}    title
+
+Web Select Window By Url
+    [Arguments]    ${locator}
+    Web select window by strategy    ${locator}    url
+
+Web Element Text Should Match Regexp
+    [Arguments]    ${locator}    ${pattern}    ${timeout}=${lo_general_timeout}
+    ${text}=    Web Get Text    ${locator}
+    Log    Text is: ${text}
+    Log    Pattern is: ${pattern}
+    ${text}=    Should Match Regexp    ${text}    ${pattern}
+    log    ${text}
+    [Return]    ${text}
+
+Web Element Text Is Existing
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    ${text}=    Web Get Text    ${locator}
+    ${text}=    Should Match Regexp    ${text}    .+
+    Log    ${text}
+    [Return]    ${text}
+
+Web Element Attribute Should Match Regexp
+    [Arguments]    ${locator}    ${pattern}    ${attr}    ${timeout}=${lo_general_timeout}
+    ${text}=    Web Get Element Attribute    ${locator}    ${attr}
+    Log    Text is: ${text}
+    Log    Pattern is: ${pattern}
+    ${text}=    Should Match Regexp    ${text}    ${pattern}
+    log    ${text}
+    [Return]    ${text}

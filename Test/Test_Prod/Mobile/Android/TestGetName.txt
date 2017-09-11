@@ -8,3 +8,11 @@ Library           String
     @{env}=    Split String    ${SUITE_NAME}    .
     log    @{env}[-5]
     log    @{suit}[-2]
+    [Login_F1_1_1_1_Y_23]
+
+test condition
+
+*** Keywords ***
+condition
+    [Arguments]    ${abc}
+    Run Keyword If    ${abc}
