@@ -22,13 +22,14 @@ Web Element Text Should Be
     Selenium2Library.Element Text Should Be    ${locator}    ${expected}
 
 Web Get Element Attribute
-    [Arguments]    ${locator}    ${expected}    ${timeout}=${lo_general_timeout}
+    [Arguments]    ${locator}    ${attr}    ${timeout}=${lo_general_timeout}
     [Documentation]    Get element attribute using given attribute: name, value,...
     ...    Examples:
     ...    Get Element Attribute locator name
     ...    Get Element Attribute locator value
     Selenium2Library.Wait Until Element Is Visible    ${locator}    ${timeout}
-    Selenium2Library.Get Element Attribute    ${locator}    ${expected}
+    ${attrValue}=    Selenium2Library.Get Element Attribute    ${locator}@${attr}
+    [Return]    ${attrValue}
 
 Web Get Text
     [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
@@ -56,4 +57,10 @@ Web Wait Until Element Contains
 Web Element Should Match Regexp
     [Arguments]    ${locator}    ${pattern}    ${timeout}=${lo_general_timeout}
     Selenium2Library.Wait Until Element Is Visible    ${locator}    ${timeout}
-    should match regexp    ${locator}    ${pattern}
+    Should Match Regexp    ${locator}    ${pattern}
+
+Web Get Value
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    Selenium2Library.Wait Until Element Is Visible    ${locator}    ${timeout}
+    ${value}=    Selenium2Library.Get Value    ${locator}
+    [Return]    ${value}
