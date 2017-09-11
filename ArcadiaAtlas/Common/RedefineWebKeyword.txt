@@ -1,0 +1,60 @@
+*** Settings ***
+Library           Selenium2Library    timeout=120    run_on_failure=Nothing
+Library           String
+Library           Collections
+Library           OperatingSystem
+Variables         ${Lang}    ${ar_Lang}
+
+*** Keywords ***
+Web Click Element
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Click element identified by locator.
+    ...    attributes for arbitrary elements are id and name. See introduction for details about locating elements.
+    Selenium2Library.Wait Until Element Is Visible    ${locator}    ${timeout}
+    Selenium2Library.Click Element    ${locator}
+
+Web Element Text Should Be
+    [Arguments]    ${locator}    ${expected}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Verifies element identified by locator exactly contains text expected.
+    ...    In contrast to Element Should Contain, this keyword does not try a substring match but an exact match on the element identified by locator.
+    ...    message can be used to override the default error message.
+    ...    Key attributes for arbitrary elements are id and name. See introduction for details about locating elements.
+    Selenium2Library.Wait Until Element Is Visible    ${locator}    ${timeout}
+    Selenium2Library.Element Text Should Be    ${locator}    ${expected}
+
+Web Get Element Attribute
+    [Arguments]    ${locator}    ${expected}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Get element attribute using given attribute: name, value,...
+    ...    Examples:
+    ...    Get Element Attribute locator name
+    ...    Get Element Attribute locator value
+    Selenium2Library.Wait Until Element Is Visible    ${locator}    ${timeout}
+    Selenium2Library.Get Element Attribute    ${locator}    ${expected}
+
+Web Get Text
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Returns the text value of element identified by locator.
+    ...    See introduction for details about locating elements.
+    Selenium2Library.Wait Until Element Is Visible    ${locator}    ${timeout}
+    ${text}=    Selenium2Library.Get Text    ${locator}
+    [Return]    ${text}
+
+Web Input Text
+    [Arguments]    ${locator}    ${text}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Types the given text into text field identified by locator.
+    ...    See introduction for details about locating elements.
+    Selenium2Library.Wait Until Element Is Visible    ${locator}    ${timeout}
+    Selenium2Library.Input Text    ${locator}    ${text}
+
+Web Wait Until Element Visible
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    Selenium2Library.Wait Until Element Is Visible    ${locator}    ${timeout}
+
+Web Wait Until Element Contains
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    Selenium2Library.Wait Until Element Contains    ${locator}    ${timeout}
+
+Web Element Should Match Regexp
+    [Arguments]    ${locator}    ${pattern}    ${timeout}=${lo_general_timeout}
+    Selenium2Library.Wait Until Element Is Visible    ${locator}    ${timeout}
+    should match regexp    ${locator}    ${pattern}
