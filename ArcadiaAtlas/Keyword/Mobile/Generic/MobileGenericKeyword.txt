@@ -48,3 +48,8 @@ Mobile Element Name Is Existing
     ${name}=    Should Match Regexp    ${name}    .+
     Log    ${name}
     [Return]    ${name}
+
+Mobile Switch App
+    Press Keycode    187
+    Sleep    2s
+    Mobile Click Element    xpath=(//android.widget.TextView[@text='${appName}'])
