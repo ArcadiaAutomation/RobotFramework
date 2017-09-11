@@ -41,23 +41,23 @@ Mobile Element Name Should Be
     AppiumLibrary.Element Name Should Be    ${locator}    ${expected}
 
 Mobile Element Text Should Be
-    [Arguments]    ${locator}    ${expected}    ${errorMessage}="Default"    ${timeout}=${lo_general_timeout}
+    [Arguments]    ${locator}    ${expected}    ${timeout}=${lo_general_timeout}
     [Documentation]    Verifies element identified by locator contains text expected.
     ...    If you wish to assert an exact (not a substring) match on the text of the element, use Element Text Should Be.
     ...    Key attributes for arbitrary elements are id and xpath. message can be used to override the default error message.
     ...    New in AppiumLibrary 1.4.
     AppiumLibrary.Wait Until Element Is Visible    ${locator}    ${timeout}
-    Run Keyword If    "${errorMessage}"=="Default"    AppiumLibrary.Element Name Should Be    ${locator}    ${expected}
-    ...    ELSE    AppiumLibrary.Element Name Should Be    ${locator}    ${expected}    ${errorMessage}
+    AppiumLibrary.Element Text Should Be    ${locator}    ${expected}
 
 Mobile Get Element Attribute
-    [Arguments]    ${locator}    ${expected}    ${timeout}=${lo_general_timeout}
+    [Arguments]    ${locator}    ${attr}    ${timeout}=${lo_general_timeout}
     [Documentation]    Get element attribute using given attribute: name, value,...
     ...    Examples:
     ...    Get Element Attribute locator name
     ...    Get Element Attribute locator value
     AppiumLibrary.Wait Until Element Is Visible    ${locator}    ${timeout}
-    AppiumLibrary.Get Element Attribute    ${locator}    ${expected}
+    ${value}=    AppiumLibrary.Get Element Attribute    ${locator}    ${attr}
+    [Return]    ${value}
 
 Mobile Get Text
     [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
@@ -79,12 +79,32 @@ Mobile Input Text
 Mobile Open Application
     [Arguments]    ${remoteURL}    ${platformName}    ${platformVersion}    ${deviceName}    ${appPackage}    ${appActivity}
     [Documentation]    Opens a new application to given Appium server. Capabilities of appium server, Android and iOS, Please check http://appium.io/slate/en/master/?python#appium-server-capabilities
-    ...    Option	Man.	Description
-    ...    remote_url	Yes	Appium server url
-    ...    alias	no	alias
+    ...    Option Man. Description
+    ...    remote_url Yes Appium server url
+    ...    alias no alias
     ...
     ...    Examples:
-    ...    Open Application	http://localhost:4723/wd/hub	alias=Myapp1	platformName=iOS	platformVersion=7.0	deviceName='iPhone Simulator'	app=your.app
+    ...    Open Application http://localhost:4723/wd/hub alias=Myapp1 platformName=iOS platformVersion=7.0 deviceName='iPhone Simulator' app=your.app
     ...
-    ...    Open Application	http://localhost:4723/wd/hub	platformName=Android	platformVersion=4.2.2	deviceName=192.168.56.101:5555	app=${CURDIR}/demoapp/OrangeDemoApp.apk	appPackage=com.netease.qa.orangedemo	appActivity=MainActivity
+    ...    Open Application http://localhost:4723/wd/hub platformName=Android platformVersion=4.2.2 deviceName=192.168.56.101:5555 app=${CURDIR}/demoapp/OrangeDemoApp.apk appPackage=com.netease.qa.orangedemo appActivity=MainActivity
     Open Application    http://${remoteURL}/wd/hub    platformName=${platfromName}    platformVersion=${platformVersion}    deviceName=${deviceName}    appPackage=${appPackage}    appActivity=${appActivity}
+
+Mobile Wait Until Element Is Visible
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Waits until element specified with locator is visible.
+    ...    Fails if timeout expires before the element is visible. See introduction for more information about timeout and its default value.
+    ...    error can be used to override the default error message.
+    ...    See also Wait Until Page Contains, Wait Until Page Contains Element, Wait For Condition and BuiltIn keyword Wait Until Keyword Succeeds.
+    AppiumLibrary.Wait Until Element Is Visible    ${locator}    ${timeout}
+
+Mobile Wait Until Page Contains Element
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    [Documentation]    Waits until element specified with locator appears on current page.
+    ...    Fails if timeout expires before the element appears. See introduction for more information about timeout and its default value.
+    ...    error can be used to override the default error message.
+    ...    See also Wait Until Page Contains, Wait Until Page Does Not Contain Wait Until Page Does Not Contain Element and BuiltIn keyword Wait Until Keyword Succeeds.
+    Wait Until Page Contains Element    ${locator}    ${timeout}
+
+Mobile Wait Until Page Does Not Contain Element
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    AppiumLibrary.Wait Until Page Does Not Contain Element    ${locator}    ${timeout}

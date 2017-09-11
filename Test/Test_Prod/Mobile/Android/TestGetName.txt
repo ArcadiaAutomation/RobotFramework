@@ -1,0 +1,10 @@
+*** Settings ***
+Library           String
+
+*** Test Cases ***
+[123_456] Hello World
+    log    ${SUITE_NAME}
+    @{suit}=    Split String    ${SUITE_NAME}    .
+    @{env}=    Split String    ${SUITE_NAME}    .
+    log    @{env}[-5]
+    log    @{suit}[-2]

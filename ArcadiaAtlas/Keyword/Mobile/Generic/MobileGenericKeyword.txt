@@ -1,2 +1,50 @@
 *** Settings ***
 Resource          ../../../Common/RedefineMobileKeyword.txt
+
+*** Keywords ***
+Mobile Get Element Name
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    ${name}=    Mobile Get Element Attribute    ${locator}    name    ${timeout}
+    [Return]    ${name}
+
+Mobile Capture Screen At Verify Point
+    [Arguments]    ${verifyPointName}    ${serialNumber}=${EMPTY}
+    @{splitCodeTestCase}    Split String    ${TEST_NAME}    ]
+    log    @{splitCodeTestCase}[0]
+    ${codeTestCase}    Set Variable    @{splitCodeTestCase}[0]
+    @{suit}=    Split String    ${SUITE_NAME}    .
+    @{env}=    Split String    ${SUITE_NAME}    .
+    ${result}=    Wait Until Keyword Succeeds    3x    1s    AppiumLibrary.Capture Page Screenshot    ${codeTestCase}_${ar_LANG}_@{env}[-5]_@{suit}[-2]_${verifyPointName}.png
+    log    ${result}
+
+Mobile Element Text Should Match Regexp
+    [Arguments]    ${locator}    ${pattern}    ${timeout}=${lo_general_timeout}
+    ${text}=    Mobile Get Text    ${locator}
+    Log    Text is: ${text}
+    Log    Pattern is: ${pattern}
+    ${text}=    Should Match Regexp    ${text}    ${pattern}
+    log    ${text}
+    [Return]    ${text}
+
+Mobile Element Text Is Existing
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    ${text}=    Mobile Get Text    ${locator}
+    ${text}=    Should Match Regexp    ${text}    .+
+    Log    ${text}
+    [Return]    ${text}
+
+Mobile Element Name Should Match Regexp
+    [Arguments]    ${locator}    ${pattern}    ${timeout}=${lo_general_timeout}
+    ${name}=    Mobile Get Element Name    ${locator}
+    Log    Actual Text is: ${name}
+    Log    Expect Pattern is: ${pattern}
+    ${name}=    Should Match Regexp    ${name}    ${pattern}
+    log    ${name}
+    [Return]    ${name}
+
+Mobile Element Name Is Existing
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    ${name}=    Mobile Get Element Name    ${locator}
+    ${name}=    Should Match Regexp    ${name}    .+
+    Log    ${name}
+    [Return]    ${name}
