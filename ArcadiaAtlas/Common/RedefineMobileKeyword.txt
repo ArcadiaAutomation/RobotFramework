@@ -3,7 +3,6 @@ Library           AppiumLibrary    timeout=120    run_on_failure=Nothing
 Library           String
 Library           Collections
 Library           OperatingSystem
-Variables         ${Lang}    ${ar_Lang}
 
 *** Keywords ***
 Mobile Click Element
@@ -87,7 +86,7 @@ Mobile Open Application
     ...    Open Application http://localhost:4723/wd/hub alias=Myapp1 platformName=iOS platformVersion=7.0 deviceName='iPhone Simulator' app=your.app
     ...
     ...    Open Application http://localhost:4723/wd/hub platformName=Android platformVersion=4.2.2 deviceName=192.168.56.101:5555 app=${CURDIR}/demoapp/OrangeDemoApp.apk appPackage=com.netease.qa.orangedemo appActivity=MainActivity
-    Open Application    http://${remoteURL}/wd/hub    platformName=${platfromName}    platformVersion=${platformVersion}    deviceName=${deviceName}    appPackage=${appPackage}    appActivity=${appActivity}
+    Open Application    http://${remoteURL}/wd/hub    platformName=${platformName}    platformVersion=${platformVersion}    deviceName=${deviceName}    appPackage=${appPackage}    appActivity=${appActivity}
 
 Mobile Wait Until Element Is Visible
     [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}

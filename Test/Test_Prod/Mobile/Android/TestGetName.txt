@@ -6,5 +6,5 @@ Library           String
     log    ${SUITE_NAME}
     @{suit}=    Split String    ${SUITE_NAME}    .
     @{env}=    Split String    ${SUITE_NAME}    .
-    log    @{env}[-5]
-    log    @{suit}[-2]
+#    log    @{env}[-5]
+    log    @{suit}[-1]

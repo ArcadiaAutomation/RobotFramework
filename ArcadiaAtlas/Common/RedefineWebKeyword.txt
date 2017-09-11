@@ -3,7 +3,6 @@ Library           Selenium2Library    timeout=120    run_on_failure=Nothing
 Library           String
 Library           Collections
 Library           OperatingSystem
-Variables         ${Lang}    ${ar_Lang}
 
 *** Keywords ***
 Web Click Element
