@@ -1,5 +1,6 @@
 *** Settings ***
 Resource          ../../../Common/RedefineMobileKeyword.txt
+Resource          ../${ar_OS}/MobileGenericKeyword.txt
 
 *** Keywords ***
 Mobile Get Element Name
@@ -51,3 +52,17 @@ Mobile Switch App
     Press Keycode    187
     Sleep    2s
     Mobile Click Element    xpath=(//android.widget.TextView[@text='${appName}'])
+
+Press Button Back
+    Run Keyword If    '${ar_OS}'=='Android'    press button back android
+    Run Keyword If    '${ar_OS}'=='iOS'    press button back iOS
+
+Swipe To Element
+    [Arguments]    ${target}    ${direction}=up    ${round}=10    ${swipe_range}=500    ${duration}=500    ${ratio}=0.2
+    Run Keyword If    '${ar_OS}'=='Android'    swipe to element android    ${target}    ${direction}    ${round}    ${swipe_range}    ${duration}    ${ratio}
+    Run Keyword If    '${ar_OS}'=='iOS'    swipe to element iOS    ${target}    ${direction}    ${round}    ${swipe_range}    ${duration}    ${ratio}
+
+Swipe On Element Container
+    [Arguments]    ${element_container}    ${target}    ${direction}=left    ${round}=10    ${duration}=500    ${ratio}=0.2
+    Run Keyword If    '${ar_OS}'=='Android'    swipe on element container android    ${element_container}    ${target}    ${direction}    ${round}    ${duration}    ${ratio}
+    Run Keyword If    '${ar_OS}'=='iOS'    swipe on element container iOS    ${element_container}    ${target}    ${direction}    ${round}    ${duration}    ${ratio}

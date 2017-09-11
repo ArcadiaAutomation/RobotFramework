@@ -1,2 +1,53 @@
 *** Settings ***
 Resource          ../../../Common/RedefineMobileKeyword.txt
+
+*** Keywords ***
+press button back android
+    AppiumLibrary.press keycode    4
+
+swipe to element android
+    [Arguments]    ${target}    ${direction}    ${round}    ${swipe_range}    ${duration}    ${ratio}
+    ${screen_width}    AppiumLibrary.Get Window Width
+    ${screen_height}   AppiumLibrary.Get Window Height
+    ${screen_center_x}    Evaluate    ${screen_width}/2
+    ${screen_center_y}    Evaluate    ${screen_height}/2
+    ${top_screen}    Evaluate    ${screen_height}*${ratio}
+    ${below_screen}    Evaluate    ${screen_height}-(${screen_height}*${ratio})
+    ${right_screen}    Evaluate    ${screen_width}-(${screen_width}*${ratio})
+    ${left_screen}    Evaluate    ${screen_width}*${ratio}
+    ${swipe_to_top}    Evaluate    ${below_screen}-${swipe_range}
+    ${swipe_to_below}    Evaluate    ${top_screen}+${swipe_range}
+    ${swipe_to_left}    Evaluate    ${right_screen}-${swipe_range}
+    ${swipe_to_right}    Evaluate    ${left_screen}+${swipe_range}
+    : FOR    ${index}    IN RANGE    1    ${round}
+    \    Run Keyword If    '${direction}'=='up'    AppiumLibrary.Swipe    ${screen_center_x}    ${below_screen}    ${screen_center_x}    ${swipe_to_top}    ${duration}
+    \    ...    ELSE IF    '${direction}'=='down'    AppiumLibrary.Swipe    ${screen_center_x}    ${top_screen}    ${screen_center_x}    ${swipe_to_below}    ${duration}
+    \    ...    ELSE IF    '${direction}'=='left'    AppiumLibrary.Swipe    ${right_screen}    ${screen_center_y}    ${swipe_to_left}    ${screen_center_y}    ${duration}
+    \    ...    ELSE IF    '${direction}'=='right'    AppiumLibrary.Swipe    ${left_screen}    ${screen_center_y}    ${swipe_to_right}    ${screen_center_y}    ${duration}
+    \    ${foundTarget}    Run Keyword And Return Status    Mobile Wait Until Element Is Visible    ${target}    1
+    \    Exit For Loop If    '${foundTarget}'=='True'
+    Run Keyword If    '${foundTarget}'=='False'    FAIL    This element is not found.
+
+swipe on element container android
+    [Arguments]    ${element_container}    ${target}    ${direction}    ${round}    ${duration}    ${ratio}
+    Mobile Wait Until Element Is Visible    ${element_container}
+    ${element_position}    AppiumLibrary.Get Element Location    ${element_container}
+    ${element_size}    get element size    ${element_container}
+    ${width_container}    Convert To Integer    ${element_position['x']}
+    ${height_container}    Convert To Integer    ${element_position['y']}
+    ${width_offset_container}    Evaluate    ${element_position['x']}+${element_size['width']}
+    ${height_offset_container}    Evaluate    ${element_position['y']}+${element_size['height']}
+    ${center_container_x}    Evaluate    (${width_container}+${width_offset_container})/2
+    ${center_container_y}    Evaluate    (${height_container}+${height_offset_container})/2
+    ${top_container}    Evaluate    ${height_container}+(${element_size['height']}*${ratio})
+    ${below_container}    Evaluate    (${height_container}+${element_size['height']})-(${element_size['height']}*${ratio})
+    ${right_container}    Evaluate    (${width_container}+${element_size['width']})-(${element_size['width']}*${ratio})
+    ${left_container}    Evaluate    ${width_container}+(${element_size['width']}*${ratio})
+    : FOR    ${index}    IN RANGE    1    ${round}
+    \    Run Keyword If    '${direction}'=='up'    AppiumLibrary.Swipe    ${center_container_x}    ${below_container}    ${center_container_x}    ${top_container}    ${duration}
+    \    ...    ELSE IF    '${direction}'=='down'    AppiumLibrary.Swipe    ${center_container_x}    ${top_container}    ${center_container_x}    ${below_container}    ${duration}
+    \    ...    ELSE IF    '${direction}'=='left'    AppiumLibrary.Swipe    ${right_container}    ${center_container_y}    ${left_container}    ${center_container_y}    ${duration}
+    \    ...    ELSE IF    '${direction}'=='right'    AppiumLibrary.Swipe    ${left_container}    ${center_container_y}    ${right_container}    ${center_container_y}    ${duration}
+    \    ${foundTarget}    Run Keyword And Return Status    Mobile Wait Until Element Is Visible    ${target}    1
+    \    Exit For Loop If    '${foundTarget}'=='True'
+    Run Keyword If    '${foundTarget}'=='False'    FAIL    This element is not found.

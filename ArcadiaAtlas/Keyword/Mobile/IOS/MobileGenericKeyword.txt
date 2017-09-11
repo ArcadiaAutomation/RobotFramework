@@ -1,2 +1,14 @@
 *** Settings ***
 Resource          ../../../Common/RedefineMobileKeyword.txt
+
+*** Keywords ***
+press button back iOS
+    Log    press button back iOS
+
+swipe to element iOS
+    [Arguments]    ${target}    ${direction}    ${round}    ${swipe_range}    ${duration}    ${ratio}
+    Log    swipe to element iOS
+
+swipe on element container iOS
+    [Arguments]    ${element_container}    ${target}    ${direction}    ${round}    ${duration}    ${ratio}
+    Log    swipe to element iOS

@@ -1,9 +1,37 @@
 *** Settings ***
 Resource         ../../../../ArcadiaAtlas/Common/RedefineMobileKeyword.txt
 Resource         ../../../../ArcadiaAtlas/Keyword/Mobile/Generic/MobileGenericKeyword.txt
+Resource         ../../../../Config/TestConfig.txt
 
 *** Test Cases ***
-Test Open App
-    Mobile Open Application    localhost:4723    Android    6.0.1    192.168.1.35:5555    com.calea.echo    com.calea.echo.MainActivity
+Test Swipe On Mood
+#    Mobile Open Application    localhost:4723    Android    6.0.1    192.168.1.35:5555    com.calea.echo    com.calea.echo.MainActivity
+    Mobile Open Application    localhost:4723    Android    6.0.1    192.168.43.1:5555    com.calea.echo    com.calea.echo.MainActivity
     Sleep    5
-    Mobile Capture Screen At Verify Point    open app
+    Swipe To Element    xpath=//android.widget.FrameLayout//android.widget.TextView[@text="12Rasi"]
+    Mobile Click Element    xpath=//android.widget.FrameLayout//android.widget.TextView[@text="12Rasi"]
+    Press Button Back
+    Swipe To Element    xpath=//android.widget.FrameLayout//android.widget.TextView[@text="*888"]    direction=down
+    Mobile Click Element    xpath=//android.widget.FrameLayout//android.widget.TextView[@text="*888"]
+    Press Button Back
+    Swipe To Element    xpath=//android.view.ViewGroup/android.widget.TextView[@text="กอล์ฟ"]    direction=right
+    Mobile Click Element    xpath=//android.view.ViewGroup/android.widget.TextView[@text="กอล์ฟ"]
+    Press Button Back
+    Swipe To Element    xpath=//android.widget.FrameLayout//android.widget.TextView[@text="*888"]    direction=left
+    Mobile Click Element    xpath=//android.widget.FrameLayout//android.widget.TextView[@text="*888"]
+    Mobile Capture Screen At Verify Point    test swipe
+
+Test Swipe On Mood Container
+    Mobile Open Application    localhost:4723    Android    6.0.1    192.168.43.1:5555    com.calea.echo    com.calea.echo.MainActivity
+    Swipe On Element Container    xpath=//*[@resource-id="com.calea.echo:id/slide_content"]    xpath=//android.widget.FrameLayout//android.widget.ImageButton[@resource-id="com.calea.echo:id/slide_option_settings"]
+    Mobile Click Element    xpath=//android.widget.FrameLayout//android.widget.ImageButton[@resource-id="com.calea.echo:id/slide_option_settings"]
+    Press Button Back
+    Swipe On Element Container    xpath=//*[@resource-id="com.calea.echo:id/slide_content"]    xpath=//android.view.ViewGroup/android.widget.TextView[@text="กอล์ฟ"]    direction=right
+    Sleep    1
+    Swipe On Element Container    xpath=//android.widget.TextView[@text="ข้าวฟ้าง"]    xpath=//android.widget.FrameLayout//android.widget.TextView[@text="*888"]
+    Sleep    1
+    Swipe On Element Container    xpath=//*[@resource-id="com.calea.echo:id/slide_content"]    xpath=//android.widget.FrameLayout//android.widget.TextView[@text="คุณยังอยู่ในบริการ Quality Content4 หากต้องการยกเลิกกด*42215"]    direction=up
+    Sleep    1
+    Swipe On Element Container    xpath=//*[@resource-id="com.calea.echo:id/slide_content"]    xpath=//android.widget.FrameLayout//android.widget.TextView[@text="4872020"]    direction=down
+    Sleep    1
+    Mobile Capture Screen At Verify Point    test swipe on element contain
