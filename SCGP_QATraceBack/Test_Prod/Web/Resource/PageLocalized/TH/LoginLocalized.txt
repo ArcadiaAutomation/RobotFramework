@@ -1,0 +1,9 @@
+*** Variables ***
+${Default}    Default
+${ErrorNotInputUsername}    Please input usename or password
+${ErrorNotInputUPassword}    Please input usename or password
+${ErrorLoginUsernameNotRegister}    ไม่พบข้อมูล User
+${ErrorUserLocked}    ข้อมูล user ถูก lock กรุณาติดต่อผู้ดูแลระบบ
+${ErrorNewUserNeverChangePass}    กรุณา Change password
+${ErrorPasswordExpired}    Passwod หมดอายุ กรุณาเปลี่ยน Passwod ใหม่
+${ErrorAccessWrongIP}    invalidHttpRequestSourceIPAddress

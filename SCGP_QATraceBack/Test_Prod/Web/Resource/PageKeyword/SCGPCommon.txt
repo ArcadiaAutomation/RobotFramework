@@ -1,0 +1,6 @@
+*** Settings ***
+Resource         ../../../../../ArcadiaAtlas/Common/RedefineWebKeywords.txt
+Resource         ../../../../../ArcadiaAtlas/Common/RunOnFailKeywords.txt
+Resource         ../../../../../ArcadiaAtlas/Keyword/Web/Generic/WebGenericKeywords.txt
+Resource         ../../../../../Config/SCGPConfig.txt
+Resource         ../PageVariables/CommonVariable.txt

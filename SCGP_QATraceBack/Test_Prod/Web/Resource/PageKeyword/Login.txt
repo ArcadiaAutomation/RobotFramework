@@ -1,0 +1,22 @@
+*** Settings ***
+Resource         SCGPCommon.txt
+Resource         ../PageLocalized/${ar_LANG}/LoginLocalized.txt
+Resource         ../PageRepository/LoginRepository.txt
+Resource         ../../../../../Config/SCGPConfig.txt
+
+*** Keywords ***
+Keywords For TearDown
+    Run Keyword If Test Failed    Capture Screen with Specific name
+    Run Keyword And Ignore Error    Check Close Dialog
+    Run keyword And Ignore Error    Logout
+    Run Keyword And Ignore Error    Close Browser
+
+Logout
+    ${loginPageStatus}    Run keyword And Return Status    Web Wait Until Element Visible    ${btnLogout}    2
+    Run Keyword If    '${loginPageStatus}'=='True'    Web Click Element    ${btnLogout}
+    Web Wait Until Element Visible    ${txtUsername}
+    Web Wait Until Element Visible    ${txtPassword}
+
+Check Close Dialog
+    ${dialogStatus}    Run Keyword And Return Status    Web Wait Until Element Visible    ${lblDialogAlertMessage}    2
+    Run Keyword If    '${dialogStatus}'=='True'    Web Click Element    ${btnOKDialog}

@@ -1,0 +1,226 @@
+*** Settings ***
+Resource            ../Resource/PageKeyword/Login.txt
+
+*** Test Cases ***
+[Login_F1_1_1_1_1_Y_1] Login success
+    [Documentation]  Test case: เข้าสู่ระบบสำเร็จ
+    ...    *Pre-Requisite*
+    ...    Username:admin
+    ...    Password:12345678
+    ...    --------------------
+    ...    *Test Step*
+    ...    1.เปิดลิ้งค์ไปที่เบราซ์เซอร์ http://192.168.1.62:9876/
+    ...    2.กรอก Username:admin
+    ...    3.กรอก Password:12345678
+    ...    4.คลิกที่ปุ่ม Login
+    ...    5.เข้าไปสู่หน้า Default [1]
+    ...    --------------------
+    ...    *Expect Result*
+    ...    [1]
+    ...    - ตรวจสอบลิงค์ปัจจุบัน "http://192.168.1.62:9876/Account/Default"
+    ...    - ตรวจสอบหน้าปัจจุบันว่ามีคำว่า "Default" อยู่หน้าเพจ
+    [Tags]    regression
+    Open Browser    ${url_test}    ${ar_BROWSER}
+    Web Input Text    ${txtUsername}    ${UserAdmin['username']}
+    Web Input Text    ${txtPassword}    ${UserAdmin['password']}
+    Web Click Element    ${btnLogin}
+    Web Element Text Should Be    ${lblTopbarDefaultPage}    ${Default}
+    Web Capture Screen At Verify Point    Varify login success
+    [Teardown]    Keywords For TearDown
+
+[Login_F1_1_1_1_1_N_2] Login not input username
+    [Documentation]  Test case: ไม่ได้กรอก Username
+    ...    *Pre-Requisite*
+    ...    Username:admin
+    ...    Password:12345678
+    ...    --------------------
+    ...    *Test Step*
+    ...    1.เปิดลิ้งค์ไปที่เบราซ์เซอร์ http://192.168.1.62:9876/
+    ...    2.คลิกที่ปุ่ม Login
+    ...    3.แสดง Popup [1]
+    ...    --------------------
+    ...    *Expect Result*
+    ...    [1]
+    ...    - ขึ้น Popup แสดงข้อความว่า "Please input usename or password"
+    [Tags]    regression
+    Open Browser    ${url_test}    ${ar_BROWSER}
+    Web Input Text    ${txtUsername}    ${EMPTY}
+    Web Input Text    ${txtPassword}    ${UserAdmin['password']}
+    Web Click Element    ${btnLogin}
+    Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorNotInputUsername}
+    Web Capture Screen At Verify Point    Varify login not input username
+    [Teardown]    Keywords For TearDown
+
+[Login_F1_1_1_1_1_N_3] Login not input password
+    [Documentation]  Test case: ไม่ได้กรอก Password
+    ...    *Pre-Requisite*
+    ...    Username:admin
+    ...    Password:12345678
+    ...    --------------------
+    ...    *Test Step*
+    ...    1.เปิดลิ้งค์ไปที่เบราซ์เซอร์ http://192.168.1.62:9876/
+    ...    2.คลิกที่ปุ่ม Login
+    ...    3.กรอก Username:admin
+    ...    4.แสดง Popup [1]
+    ...    --------------------
+    ...    *Expect Result*
+    ...    [1]
+    ...    - ขึ้น Popup แสดงข้อความว่า "Please input usename or password"
+    [Tags]    regression
+    Open Browser    ${url_test}    ${ar_BROWSER}
+    Web Input Text    ${txtUsername}    ${UserAdmin['username']}
+    Web Input Text    ${txtPassword}    ${EMPTY}
+    Web Click Element    ${btnLogin}
+    Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorNotInputUPassword}
+    Web Capture Screen At Verify Point    Varify login not input password
+    [Teardown]    Keywords For TearDown
+
+[Login_F1_1_1_1_1_N_4] Login by username not register
+    [Documentation]  Test case: ระบุ Username ที่ไม่มีในระบบ
+    ...    *Pre-Requisite*
+    ...    Username:adminXY
+    ...    Password:12345678
+    ...    --------------------
+    ...    *Test Step*
+    ...    1.เปิดลิ้งค์ไปที่เบราซ์เซอร์ http://192.168.1.62:9876/
+    ...    2.กรอก Username:adminXY
+    ...    3.กรอก Password:12345678
+    ...    4.คลิกที่ปุ่ม Login
+    ...    5.แสดง Popup [1]
+    ...    --------------------
+    ...    *Expect Result*
+    ...    [1]
+    ...    - ขึ้น Popup แสดงข้อความว่า "ไม่พบข้อมูล User"
+    [Tags]    regression
+    Open Browser    ${url_test}    ${ar_BROWSER}
+    Web Input Text    ${txtUsername}    ${UserNotRegister['username']}
+    Web Input Text    ${txtPassword}    ${UserNotRegister['password']}
+    Web Click Element    ${btnLogin}
+    Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorLoginUsernameNotRegister}
+    Web Capture Screen At Verify Point    Varify login by username not register
+    [Teardown]    Keywords For TearDown
+
+[Login_F1_1_1_1_1_N_5] Login by wrong password
+    [Documentation]  Test case: ระบุ Password ผิด
+    ...    *Pre-Requisite*
+    ...    Username:admin
+    ...    Password:dfsssssssssss
+    ...    --------------------
+    ...    *Test Step*
+    ...    1.เปิดลิ้งค์ไปที่เบราซ์เซอร์ http://192.168.1.62:9876/
+    ...    2.กรอก Username:admin
+    ...    3.กรอก Password:dfsssssssssss
+    ...    4.คลิกที่ปุ่ม Login
+    ...    5.แสดง Popup [1]
+    ...    --------------------
+    ...    *Expect Result*
+    ...    [1]
+    ...    - ขึ้น Popup แสดงข้อความว่า "ไม่พบข้อมูล User"
+    [Tags]    non_regression
+    Open Browser    ${url_test}    ${ar_BROWSER}
+    Web Input Text    ${txtUsername}    ${UserWrongPassword['username']}
+    Web Input Text    ${txtPassword}    ${UserWrongPassword['password']}
+    Web Click Element    ${btnLogin}
+    Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorLoginUsernameNotRegister}
+    Web Capture Screen At Verify Point    Varify login by wrong password
+    [Teardown]    Keywords For TearDown
+
+[Login_F1_1_1_1_1_N_6] Login by user was locked
+    [Documentation]  Test case: กรณี Username ถูกล๊อก
+    ...    *Pre-Requisite*
+    ...    Username:lockadmin
+    ...    Password:12345678
+    ...    ต้องเคยกรอกรหัสผิดเกิด 3 ครั้ง
+    ...    --------------------
+    ...    *Test Step*
+    ...    1.เปิดลิ้งค์ไปที่เบราซ์เซอร์ http://192.168.1.62:9876/
+    ...    2.กรอก Username:lockadmin
+    ...    3.กรอก Password:12345678
+    ...    4.คลิกที่ปุ่ม Login
+    ...    5.แสดง Popup [1]
+    ...    --------------------
+    ...    *Expect Result*
+    ...    [1]
+    ...    - ขึ้น Popup แสดงข้อความว่า "ข้อมูล user ถูก lock กรุณาติดต่อผู้ดูแลระบบ"
+    [Tags]    regression
+    Open Browser    ${url_test}    ${ar_BROWSER}
+    Web Input Text    ${txtUsername}    ${UserLocked['username']}
+    Web Input Text    ${txtPassword}    ${UserLocked['password']}
+    Web Click Element    ${btnLogin}
+    Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorUserLocked}
+    Web Capture Screen At Verify Point    Varify login by user was locked
+    [Teardown]    Keywords For TearDown
+
+[Login_F1_1_1_1_1_N_7] Login by new user never changed password
+    [Documentation]  Test case: กรณี Username ถูกล๊อก
+    ...    *Pre-Requisite*
+    ...    Username:newadmin
+    ...    Password:j$j8e7p1
+    ...    ต้องเคยกรอกรหัสผิดเกิด 3 ครั้ง
+    ...    --------------------
+    ...    *Test Step*
+    ...    1.เปิดลิ้งค์ไปที่เบราซ์เซอร์ http://192.168.1.62:9876/
+    ...    2.กรอก Username:newadmin
+    ...    3.กรอก Password:j$j8e7p1
+    ...    4.คลิกที่ปุ่ม Login
+    ...    5.แสดง Popup [1]
+    ...    --------------------
+    ...    *Expect Result*
+    ...    [1]
+    ...    - ขึ้น Popup แสดงข้อความว่า "ข้อมูล user ถูก lock กรุณาติดต่อผู้ดูแลระบบ"
+    [Tags]    regression
+    Open Browser    ${url_test}    ${ar_BROWSER}
+    Web Input Text    ${txtUsername}    ${NewUserNeverChangePass['username']}
+    Web Input Text    ${txtPassword}    ${NewUserNeverChangePass['password']}
+    Web Click Element    ${btnLogin}
+    Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorNewUserNeverChangePass}
+    Web Capture Screen At Verify Point    Varify login by new user never changed password
+    [Teardown]    Keywords For TearDown
+
+[Login_F1_1_1_1_1_N_8] Login by password has expired
+    [Documentation]  Test case: กรณี Password หมดอายุ
+    ...    *Pre-Requisite*
+    ...    User ที่ password ไม่มีการเปลี่ยน password เกิน 6 เดือน
+    ...    --------------------
+    ...    *Test Step*
+    ...    1.เปิดลิ้งค์ไปที่เบราซ์เซอร์ http://192.168.1.62:9876/
+    ...    2.กรอก Username:
+    ...    3.กรอก Password:
+    ...    4.คลิกที่ปุ่ม Login
+    ...    5.แสดง Popup [1]
+    ...    --------------------
+    ...    *Expect Result*
+    ...    [1]
+    ...    - ขึ้น Popup แสดงข้อความว่า "Passwod หมดอายุ กรุณาเปลี่ยน Passwod ใหม่"
+    [Tags]    regression
+    Open Browser    ${url_test}    ${ar_BROWSER}
+    Web Input Text    ${txtUsername}    ${UserPasswordExpired['username']}
+    Web Input Text    ${txtPassword}    ${UserPasswordExpired['password']}
+    Web Click Element    ${btnLogin}
+    Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorPasswordExpired}
+    Web Capture Screen At Verify Point    Varify login by new user never changed password
+    [Teardown]    Keywords For TearDown
+
+[Login_F1_1_1_1_1_N_9] Access login page to wrong IP
+    [Documentation]  Test case: กรณีระบบ IP ไม่ถูกต้อง
+    ...    *Pre-Requisite*
+    ...    ตั้งค่า IP API ใน appsetting ให้เป็น IP อื่น
+    ...    --------------------
+    ...    *Test Step*
+    ...    1.เปิดลิ้งค์ไปที่เบราซ์เซอร์ http://192.168.1.62:9876/
+    ...    2.กรอก Username:
+    ...    3.กรอก Password:
+    ...    4.คลิกที่ปุ่ม Login
+    ...    5.แสดง Popup [1]
+    ...    --------------------
+    ...    *Expect Result*
+    ...    [1]
+    ...    - ขึ้น Popup แสดงข้อความว่า "invalidHttpRequestSourceIPAddress"
+    [Tags]    non_regression
+    Open Browser    ${url_test}    ${ar_BROWSER}
+    Web Input Text    ${txtUsername}    ${UserAdmin['username']}
+    Web Input Text    ${txtPassword}    ${UserAdmin['password']}
+    Web Click Element    ${btnLogin}
+    Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorAccessWrongIP}
+    Web Capture Screen At Verify Point    Varify access login page to wrong IP
+    [Teardown]    Keywords For TearDown

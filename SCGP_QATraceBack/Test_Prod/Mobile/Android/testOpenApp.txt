@@ -1,6 +1,6 @@
 *** Settings ***
-Resource         ../../../../ArcadiaAtlas/Common/RedefineMobileKeyword.txt
-Resource         ../../../../ArcadiaAtlas/Keyword/Mobile/Generic/MobileGenericKeyword.txt
+Resource         ../../../../ArcadiaAtlas/Common/RedefineMobileKeywords.txt
+Resource         ../../../../ArcadiaAtlas/Keyword/Mobile/Generic/MobileGenericKeywords.txt
 Resource         ../../../../Config/TestConfig.txt
 
 *** Test Cases ***

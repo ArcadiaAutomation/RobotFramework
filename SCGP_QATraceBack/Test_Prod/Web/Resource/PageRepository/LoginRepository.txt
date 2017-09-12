@@ -1,0 +1,14 @@
+*** Variables ***
+&{UserAdmin}    username=admin    password=12345678
+&{UserNotRegister}    username=adminXY    password=12345678
+&{UserWrongPassword}    username=admin    password=dfsssssssssss
+&{UserLocked}    username=lockadmin    password=12345678
+&{NewUserNeverChangePass}    username=newadmin    password=j$j8e7p1
+&{UserPasswordExpired}    username=6madmin    password=12345678
+${txtUsername}    xpath=//*[@id="UserName"]
+${txtPassword}    xpath=//*[@id="Password"]
+${btnLogin}    xpath=//*[@id="goButton"]
+${lblTopbarDefaultPage}    xpath=//*[@id="page-wrapper"]//*[@class="col-lg-10"]/h2
+${btnLogout}    xpath=//*[@id="page-wrapper"]//*[@class="nav navbar-top-links navbar-right"]/li[4]/a
+${lblDialogAlertMessage}    xpath=//*[@id="pAlertmessage"]
+${btnOKDialog}    xpath=//*[@id="ok"]

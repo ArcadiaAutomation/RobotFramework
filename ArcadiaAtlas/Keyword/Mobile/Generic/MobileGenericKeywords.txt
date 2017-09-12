@@ -1,6 +1,6 @@
 *** Settings ***
-Resource          ../../../Common/RedefineMobileKeyword.txt
-Resource          ../${ar_OS}/MobileGenericKeyword.txt
+Resource          ../../../Common/RedefineMobileKeywords.txt
+Resource          ../${ar_OS}/MobileGenericKeywords.txt
 
 *** Keywords ***
 Mobile Get Element Name
@@ -13,8 +13,9 @@ Mobile Capture Screen At Verify Point
     @{splitCodeTestCase}    Split String    ${TEST_NAME}    ]
     log    @{splitCodeTestCase}[0]
     ${codeTestCase}    Set Variable    @{splitCodeTestCase}[0]
-    ${result}=    Wait Until Keyword Succeeds    3x    1s    AppiumLibrary.Capture Page Screenshot    ${codeTestCase}_${verifyPointName}_${ar_LANG}_${ar_MODE}.png
+    ${result}=    Wait Until Keyword Succeeds    3x    1s    AppiumLibrary.Capture Page Screenshot    ${codeTestCase}]_${verifyPointName}_${ar_LANG}_${ar_MODE}.png
     log    ${result}
+    sleep    2
 
 Mobile Element Text Should Match Regexp
     [Arguments]    ${locator}    ${pattern}    ${timeout}=${lo_general_timeout}

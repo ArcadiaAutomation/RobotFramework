@@ -1,2 +1,0 @@
-*** variables ***
-${lo_general_timeout}    10

@@ -1,6 +1,6 @@
 *** Settings ***
-Resource          RedefineMobileKeyword.txt
-Resource          RedefineWebKeyword.txt
+Resource          RedefineMobileKeywords.txt
+Resource          RedefineWebKeywords.txt
 
 *** Keywords ***
 Capture Screen with Specific name
@@ -14,3 +14,4 @@ Capture Screen with Specific name
     Run Keyword If    "${AppiumStatus}"=="True"    Append To List    ${imageName}    Failed-Appium-${CodeTestCase}]-${SUITE_NAME}-${screenshot_index}-${ar_LANG}-${ar_Mode}.png
     Run Keyword If    "${SeleniumStatus}"=="True"    Append To List    ${imageName}    Failed-Selenium-${CodeTestCase}]-${SUITE_NAME}-${screenshot_index}-${ar_LANG}-${ar_Mode}.png
     Log    ${imageName}
+    sleep    2

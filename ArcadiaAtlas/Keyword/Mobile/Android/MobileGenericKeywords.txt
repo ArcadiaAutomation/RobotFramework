@@ -1,5 +1,5 @@
 *** Settings ***
-Resource          ../../../Common/RedefineMobileKeyword.txt
+Resource          ../../../Common/RedefineMobileKeywords.txt
 
 *** Keywords ***
 press button back android
