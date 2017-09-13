@@ -1,9 +1,9 @@
 *** Settings ***
-Resource            ../Resource/PageKeyword/Login.txt
+Resource          ../Resource/PageKeyword/Login.txt
 
 *** Test Cases ***
 [Login_F1_1_1_1_1_Y_1] Login success
-    [Documentation]  Test case: เข้าสู่ระบบสำเร็จ
+    [Documentation]    Test case: เข้าสู่ระบบสำเร็จ
     ...    *Pre-Requisite*
     ...    Username:admin
     ...    Password:12345678
@@ -21,15 +21,15 @@ Resource            ../Resource/PageKeyword/Login.txt
     ...    - ตรวจสอบหน้าปัจจุบันว่ามีคำว่า "Default" อยู่หน้าเพจ
     [Tags]    regression
     Open Browser    ${url_test}    ${ar_BROWSER}
-    Web Input Text    ${txtUsername}    ${UserAdmin['username']}
-    Web Input Text    ${txtPassword}    ${UserAdmin['password']}
+    Web Input Text    ${txtUsername}    &{UserAdmin}[username]
+    Web Input Text    ${txtPassword}    &{UserAdmin}[password]
     Web Click Element    ${btnLogin}
     Web Element Text Should Be    ${lblTopbarDefaultPage}    ${Default}
     Web Capture Screen At Verify Point    Varify login success
     [Teardown]    Keywords For TearDown
 
 [Login_F1_1_1_1_1_N_2] Login not input username
-    [Documentation]  Test case: ไม่ได้กรอก Username
+    [Documentation]    Test case: ไม่ได้กรอก Username
     ...    *Pre-Requisite*
     ...    Username:admin
     ...    Password:12345678
@@ -52,7 +52,7 @@ Resource            ../Resource/PageKeyword/Login.txt
     [Teardown]    Keywords For TearDown
 
 [Login_F1_1_1_1_1_N_3] Login not input password
-    [Documentation]  Test case: ไม่ได้กรอก Password
+    [Documentation]    Test case: ไม่ได้กรอก Password
     ...    *Pre-Requisite*
     ...    Username:admin
     ...    Password:12345678
@@ -76,7 +76,7 @@ Resource            ../Resource/PageKeyword/Login.txt
     [Teardown]    Keywords For TearDown
 
 [Login_F1_1_1_1_1_N_4] Login by username not register
-    [Documentation]  Test case: ระบุ Username ที่ไม่มีในระบบ
+    [Documentation]    Test case: ระบุ Username ที่ไม่มีในระบบ
     ...    *Pre-Requisite*
     ...    Username:adminXY
     ...    Password:12345678
@@ -101,7 +101,7 @@ Resource            ../Resource/PageKeyword/Login.txt
     [Teardown]    Keywords For TearDown
 
 [Login_F1_1_1_1_1_N_5] Login by wrong password
-    [Documentation]  Test case: ระบุ Password ผิด
+    [Documentation]    Test case: ระบุ Password ผิด
     ...    *Pre-Requisite*
     ...    Username:admin
     ...    Password:dfsssssssssss
@@ -126,7 +126,7 @@ Resource            ../Resource/PageKeyword/Login.txt
     [Teardown]    Keywords For TearDown
 
 [Login_F1_1_1_1_1_N_6] Login by user was locked
-    [Documentation]  Test case: กรณี Username ถูกล๊อก
+    [Documentation]    Test case: กรณี Username ถูกล๊อก
     ...    *Pre-Requisite*
     ...    Username:lockadmin
     ...    Password:12345678
@@ -152,7 +152,7 @@ Resource            ../Resource/PageKeyword/Login.txt
     [Teardown]    Keywords For TearDown
 
 [Login_F1_1_1_1_1_N_7] Login by new user never changed password
-    [Documentation]  Test case: กรณี Username ถูกล๊อก
+    [Documentation]    Test case: กรณี Username ถูกล๊อก
     ...    *Pre-Requisite*
     ...    Username:newadmin
     ...    Password:j$j8e7p1
@@ -178,7 +178,7 @@ Resource            ../Resource/PageKeyword/Login.txt
     [Teardown]    Keywords For TearDown
 
 [Login_F1_1_1_1_1_N_8] Login by password has expired
-    [Documentation]  Test case: กรณี Password หมดอายุ
+    [Documentation]    Test case: กรณี Password หมดอายุ
     ...    *Pre-Requisite*
     ...    User ที่ password ไม่มีการเปลี่ยน password เกิน 6 เดือน
     ...    --------------------
@@ -202,7 +202,7 @@ Resource            ../Resource/PageKeyword/Login.txt
     [Teardown]    Keywords For TearDown
 
 [Login_F1_1_1_1_1_N_9] Access login page to wrong IP
-    [Documentation]  Test case: กรณีระบบ IP ไม่ถูกต้อง
+    [Documentation]    Test case: กรณีระบบ IP ไม่ถูกต้อง
     ...    *Pre-Requisite*
     ...    ตั้งค่า IP API ใน appsetting ให้เป็น IP อื่น
     ...    --------------------

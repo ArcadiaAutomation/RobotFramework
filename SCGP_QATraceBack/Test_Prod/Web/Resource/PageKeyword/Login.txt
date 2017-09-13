@@ -1,8 +1,8 @@
 *** Settings ***
-Resource         SCGPCommon.txt
-Resource         ../PageLocalized/${ar_LANG}/LoginLocalized.txt
-Resource         ../PageRepository/LoginRepository.txt
-Resource         ../../../../../Config/SCGPConfig.txt
+Resource          SCGPCommon.txt
+Resource          ../PageLocalized/${ar_LANG}/LoginLocalized.txt
+Resource          ../PageRepository/LoginRepository.txt
+Resource          ../../../../../Config/SCGPConfig.txt
 
 *** Keywords ***
 Keywords For TearDown
