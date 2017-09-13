@@ -1,12 +1,13 @@
 *** Settings ***
 Resource          RedefineMobileKeywords.txt
 Resource          RedefineWebKeywords.txt
+Library           String
 
 *** Keywords ***
 Capture Screen with Specific name
     ${screenshot_index}=    Get Variable Value    ${screenshot_index}    ${0}
     Set Global Variable    ${screenshot_index}    ${screenshot_index.__add__(1)}
-    @{SplitCodeTestCase}    Split String    ${TEST_NAME}    ]
+    @{SplitCodeTestCase}    Split String     ${TEST_NAME}    ]
     ${CodeTestCase}    Set Variable    @{SplitCodeTestCase}[0]
     ${AppiumStatus}    Run Keyword And Return Status    AppiumLibrary.Capture Page Screenshot    Failed-Appium-${CodeTestCase}]-${SUITE_NAME}-${screenshot_index}-${ar_LANG}-${ar_Mode}.png
     ${SeleniumStatus}    Run Keyword And Return Status    Selenium2Library.Capture Page Screenshot    Failed-Selenium-${CodeTestCase}]-${SUITE_NAME}-${screenshot_index}-${ar_LANG}-${ar_Mode}.png
@@ -14,4 +15,3 @@ Capture Screen with Specific name
     Run Keyword If    "${AppiumStatus}"=="True"    Append To List    ${imageName}    Failed-Appium-${CodeTestCase}]-${SUITE_NAME}-${screenshot_index}-${ar_LANG}-${ar_Mode}.png
     Run Keyword If    "${SeleniumStatus}"=="True"    Append To List    ${imageName}    Failed-Selenium-${CodeTestCase}]-${SUITE_NAME}-${screenshot_index}-${ar_LANG}-${ar_Mode}.png
     Log    ${imageName}
-    sleep    2
