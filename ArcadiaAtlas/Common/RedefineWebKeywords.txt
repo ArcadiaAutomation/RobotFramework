@@ -64,3 +64,9 @@ Web Get Value
     Selenium2Library.Wait Until Element Is Visible    ${locator}    ${timeout}
     ${value}=    Selenium2Library.Get Value    ${locator}
     [Return]    ${value}
+
+Web Mouse Over
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    [Documentation]    \
+    Selenium2Library.Wait Until Element Contains    ${locator}    ${timeout}
+    Mouse Over    ${locator}
