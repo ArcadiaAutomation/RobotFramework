@@ -68,7 +68,7 @@ Resource          ../Resource/PageKeyword/Login.txt
     ...    - ขึ้น Popup แสดงข้อความว่า "Please input usename or password"
     [Tags]    regression
     Open Browser    ${url_test}    ${ar_BROWSER}
-    Web Input Text    ${txtUsername}    ${UserAdmin['username']}
+    Web Input Text    ${txtUsername}    &{UserAdmin}[username]
     Web Input Text    ${txtPassword}    ${EMPTY}
     Web Click Element    ${btnLogin}
     Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorNotInputUPassword}
@@ -93,8 +93,8 @@ Resource          ../Resource/PageKeyword/Login.txt
     ...    - ขึ้น Popup แสดงข้อความว่า "ไม่พบข้อมูล User"
     [Tags]    regression
     Open Browser    ${url_test}    ${ar_BROWSER}
-    Web Input Text    ${txtUsername}    ${UserNotRegister['username']}
-    Web Input Text    ${txtPassword}    ${UserNotRegister['password']}
+    Web Input Text    ${txtUsername}    &{UserNotRegister}[username]
+    Web Input Text    ${txtPassword}    &{UserNotRegister}[password]
     Web Click Element    ${btnLogin}
     Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorLoginUsernameNotRegister}
     Web Capture Screen At Verify Point    Varify login by username not register
@@ -118,8 +118,8 @@ Resource          ../Resource/PageKeyword/Login.txt
     ...    - ขึ้น Popup แสดงข้อความว่า "ไม่พบข้อมูล User"
     [Tags]    non_regression
     Open Browser    ${url_test}    ${ar_BROWSER}
-    Web Input Text    ${txtUsername}    ${UserWrongPassword['username']}
-    Web Input Text    ${txtPassword}    ${UserWrongPassword['password']}
+    Web Input Text    ${txtUsername}    &{UserWrongPassword}[username]
+    Web Input Text    ${txtPassword}    &{UserWrongPassword}[password]
     Web Click Element    ${btnLogin}
     Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorLoginUsernameNotRegister}
     Web Capture Screen At Verify Point    Varify login by wrong password
@@ -144,8 +144,8 @@ Resource          ../Resource/PageKeyword/Login.txt
     ...    - ขึ้น Popup แสดงข้อความว่า "ข้อมูล user ถูก lock กรุณาติดต่อผู้ดูแลระบบ"
     [Tags]    regression
     Open Browser    ${url_test}    ${ar_BROWSER}
-    Web Input Text    ${txtUsername}    ${UserLocked['username']}
-    Web Input Text    ${txtPassword}    ${UserLocked['password']}
+    Web Input Text    ${txtUsername}    &{UserLocked}[username]
+    Web Input Text    ${txtPassword}    &{UserLocked}[password]
     Web Click Element    ${btnLogin}
     Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorUserLocked}
     Web Capture Screen At Verify Point    Varify login by user was locked
@@ -170,8 +170,8 @@ Resource          ../Resource/PageKeyword/Login.txt
     ...    - ขึ้น Popup แสดงข้อความว่า "ข้อมูล user ถูก lock กรุณาติดต่อผู้ดูแลระบบ"
     [Tags]    regression
     Open Browser    ${url_test}    ${ar_BROWSER}
-    Web Input Text    ${txtUsername}    ${NewUserNeverChangePass['username']}
-    Web Input Text    ${txtPassword}    ${NewUserNeverChangePass['password']}
+    Web Input Text    ${txtUsername}    &{NewUserNeverChangePass}[username]
+    Web Input Text    ${txtPassword}    &{NewUserNeverChangePass}[password]
     Web Click Element    ${btnLogin}
     Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorNewUserNeverChangePass}
     Web Capture Screen At Verify Point    Varify login by new user never changed password
@@ -194,8 +194,8 @@ Resource          ../Resource/PageKeyword/Login.txt
     ...    - ขึ้น Popup แสดงข้อความว่า "Passwod หมดอายุ กรุณาเปลี่ยน Passwod ใหม่"
     [Tags]    regression
     Open Browser    ${url_test}    ${ar_BROWSER}
-    Web Input Text    ${txtUsername}    ${UserPasswordExpired['username']}
-    Web Input Text    ${txtPassword}    ${UserPasswordExpired['password']}
+    Web Input Text    ${txtUsername}    &{UserPasswordExpired}[username]
+    Web Input Text    ${txtPassword}    &{UserPasswordExpired}[password]
     Web Click Element    ${btnLogin}
     Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorPasswordExpired}
     Web Capture Screen At Verify Point    Varify login by new user never changed password
@@ -218,8 +218,8 @@ Resource          ../Resource/PageKeyword/Login.txt
     ...    - ขึ้น Popup แสดงข้อความว่า "invalidHttpRequestSourceIPAddress"
     [Tags]    non_regression
     Open Browser    ${url_test}    ${ar_BROWSER}
-    Web Input Text    ${txtUsername}    ${UserAdmin['username']}
-    Web Input Text    ${txtPassword}    ${UserAdmin['password']}
+    Web Input Text    ${txtUsername}    &{UserAdmin}[username]
+    Web Input Text    ${txtPassword}    &{UserAdmin}[password]
     Web Click Element    ${btnLogin}
     Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorAccessWrongIP}
     Web Capture Screen At Verify Point    Varify access login page to wrong IP

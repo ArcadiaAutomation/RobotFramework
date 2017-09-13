@@ -32,9 +32,9 @@ parallel firstBranch: {
 		env.outputPath='D:\\Output\\Prod'
 		
 		dir (env.WORKSPACE){
-			stage ('SCGP_QATraceBack_Login_Production')
+			stage ('SCGP_QATraceBack_Login_Testsite')
 			{
-				run_SCGP_QATraceBack_Login_Production(runner)
+				run_SCGP_QATraceBack_Login_Testsite(runner)
 			}
 			stage ('MyAIS_AllReport'){
 				run_all_report(runner)
@@ -57,7 +57,7 @@ def run_SCGP_QATraceBack_Login_Production(runner){
 			//Check out
 			checkout([$class: 'SubversionSCM', additionalCredentials: [], excludedCommitMessages: '', excludedRegions: '', excludedRevprop: '', excludedUsers: '', filterChangelog: false, ignoreDirPropChanges: false, includedRegions: '', locations: [[credentialsId: 'Tinpan', depthOption: 'infinity', ignoreExternalsOption: true, local: 'AisRobotBuffet', remote: 'https://matador.toro.ais/svn/ProjectDocument/OSD/E2E/Automate/RobotFramework/AisRobotBuffet'], [credentialsId: 'Tinpan', depthOption: 'infinity', ignoreExternalsOption: true, local: 'MyAIS', remote: 'https://matador.toro.ais/svn/ProjectDocument/OSD/E2E/Automate/RobotFramework/MyAIS']], workspaceUpdater: [$class: 'UpdateUpdater']])
 			//RUN
-			bat "if exist " + env.outputPath + "\\AISeStatement\\ (del /q " + env.outputPath + "\\AISeStatement\\*)"
+			bat "if exist " + env.outputPath + "\\Web\\WebPC\\Login\\ (del /q " + env.outputPath + "\\Web\\WebPC\\Login\\*)"
 			def START_TIME_EN = getTime()
 			echo START_TIME_EN
 			
@@ -66,7 +66,7 @@ def run_SCGP_QATraceBack_Login_Production(runner){
 			def END_TIME_EN = getTime()
 			echo END_TIME_EN
 			//Rebot
-			bat 'rebot --outputdir '+ env.outputPath +'\\Web\\WebPC\\Login -o output_3BO_EN.xml -l log3BO_EN.html -r report3BO_EN.html  -R -N Online --nostatusrc '+ env.outputPath +'\\AISeStatement\\output*_EN_3BO.xml'
+			bat 'rebot --outputdir '+ env.outputPath +'\\Web\\WebPC\\Login -o output_EN_Online.xml -l log_EN_Online.html -r report_EN_Online.html  -R -N Online --nostatusrc '+ env.outputPath +'\\Web\\WebPC\\Login\\output_EN_Online.xml '
 			bat 'rebot --outputdir '+ env.outputPath +'\\Web\\WebPC\\Login -o outputEN.xml -N EN -l log.html -r report.html --nostatusrc --starttime "' + START_TIME_EN + '" --endtime "' + END_TIME_EN + '" '+ env.outputPath +'\\Web\\WebPC\\Login\\output_EN_Online.xml '
 			def START_TIME_TH = getTime()
 			echo START_TIME_TH
@@ -76,7 +76,7 @@ def run_SCGP_QATraceBack_Login_Production(runner){
 			def END_TIME_TH = getTime()
 			echo END_TIME_TH
 			//Rebot
-			bat 'rebot --outputdir '+ env.outputPath +'\\Web\\WebPC\\Login -o output_3BO_TH.xml -l log3BO_TH.html -r report3BE_TH.html  -R -N Online --nostatusrc '+ env.outputPath +'\\Web\\WebPC\\Login\\output_TH_Online.xml '
+			bat 'rebot --outputdir '+ env.outputPath +'\\Web\\WebPC\\Login -o output_TH_Online.xml -l log_TH_Online.html -r report_TH_Online.html  -R -N Online --nostatusrc '+ env.outputPath +'\\Web\\WebPC\\Login\\output_TH_Online.xml '
 			bat 'rebot --outputdir '+ env.outputPath +'\\Web\\WebPC\\Login -o outputTH.xml -N TH -l log.html -r report.html --nostatusrc --starttime "' + START_TIME_TH + '" --endtime "' + END_TIME_TH + '" '+ env.outputPath +'\\Web\\WebPC\\Login\\output_TH_Online.xml '
 			
 			//Merge all rebot
