@@ -8,6 +8,8 @@ Capture Screen with Specific name
     ${CodeTestCase}    Set Variable    @{SplitCodeTestCase}[0]
     ${AppiumStatus}    Run Keyword And Return Status    AppiumLibrary.Capture Page Screenshot    Failed-Appium-${CodeTestCase}]-${SUITE_NAME}${ar_LANG}-${ar_Mode}.png
     ${SeleniumStatus}    Run Keyword And Return Status    Selenium2Library.Capture Page Screenshot    Failed-Selenium-${CodeTestCase}]-${SUITE_NAME}${ar_LANG}-${ar_Mode}.png
+    @{SplitCodeTestCase}    Split String     ${TEST_NAME}    ]
+    ${CodeTestCase}    Set Variable    @{SplitCodeTestCase}[0]
     ${AppiumStatus}    Run Keyword And Return Status    AppiumLibrary.Capture Page Screenshot    Failed-Appium-${CodeTestCase}]-${SUITE_NAME}-${screenshot_index}-${ar_LANG}-${ar_Mode}.png
     ${SeleniumStatus}    Run Keyword And Return Status    Selenium2Library.Capture Page Screenshot    Failed-Selenium-${CodeTestCase}]-${SUITE_NAME}-${screenshot_index}-${ar_LANG}-${ar_Mode}.png
     @{imageName}    Create List
