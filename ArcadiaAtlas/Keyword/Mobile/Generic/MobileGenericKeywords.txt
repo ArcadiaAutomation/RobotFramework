@@ -60,10 +60,24 @@ Press Button Back
 
 Swipe To Element
     [Arguments]    ${target}    ${direction}=up    ${round}=10    ${swipe_range}=500    ${duration}=500    ${ratio}=0.2
+    [Documentation]    Swipe to element that visible on screen
+    ...    When element is out of screen, it will swipe and verify element until visible.
+    ...    Arguments - target: is element target for swipe to. [${locator}] (out of screen).
+    ...              - direction: default direction is up. [up, down, left, right]
+    ...              - round: default round for swipe until timeout
+    ...              - ratio: setting ratio for start point is percentage.
     Run Keyword If    '${ar_OS}'=='Android'    swipe to element android    ${target}    ${direction}    ${round}    ${swipe_range}    ${duration}    ${ratio}
     Run Keyword If    '${ar_OS}'=='iOS'    swipe to element iOS    ${target}    ${direction}    ${round}    ${swipe_range}    ${duration}    ${ratio}
 
 Swipe On Element Container
     [Arguments]    ${element_container}    ${target}    ${direction}=left    ${round}=10    ${duration}=500    ${ratio}=0.2
+    [Documentation]    Swipe to element on element container
+    ...    When element is out of screen, it will swipe and verify element until visible
+    ...    by swipe on element container that visible screen.
+    ...    Arguments - element_container: element container locator on screen (visible).
+    ...              - target: is element target for swipe to. [${locator}] (out of screen).
+    ...              - direction: default direction is left. [up, down, left, right]
+    ...              - round: default round for swipe until timeout
+    ...              - ratio (< 0.5): setting ratio for swipe on screen is percentage (from center screen).
     Run Keyword If    '${ar_OS}'=='Android'    swipe on element container android    ${element_container}    ${target}    ${direction}    ${round}    ${duration}    ${ratio}
     Run Keyword If    '${ar_OS}'=='iOS'    swipe on element container iOS    ${element_container}    ${target}    ${direction}    ${round}    ${duration}    ${ratio}
