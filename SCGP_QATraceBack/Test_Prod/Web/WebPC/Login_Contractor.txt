@@ -224,3 +224,29 @@ Resource          ../Resource/PageKeyword/Login.txt
     Web Element Text Should Be    ${lblDialogAlertMessage}    ${ErrorAccessWrongIP}
     Web Capture Screen At Verify Point    Varify access login page to wrong IP
     [Teardown]    Keywords For TearDown
+
+Test failed
+    [Documentation]    Test case: เข้าสู่ระบบสำเร็จ
+    ...    *Pre-Requisite*
+    ...    Username:admin
+    ...    Password:12345678
+    ...    --------------------
+    ...    *Test Step*
+    ...    1.เปิดลิ้งค์ไปที่เบราซ์เซอร์ http://192.168.1.62:9876/
+    ...    2.กรอก Username:admin
+    ...    3.กรอก Password:12345678
+    ...    4.คลิกที่ปุ่ม Login
+    ...    5.เข้าไปสู่หน้า Default [1]
+    ...    --------------------
+    ...    *Expect Result*
+    ...    [1]
+    ...    - ตรวจสอบลิงค์ปัจจุบัน "http://192.168.1.62:9876/Account/Default"
+    ...    - ตรวจสอบหน้าปัจจุบันว่ามีคำว่า "Default" อยู่หน้าเพจ
+    [Tags]    regression
+    Open Browser    ${url_test}    ${ar_BROWSER}
+    Web Input Text    ${txtUsername}    123456
+    Web Input Text    ${txtPassword}    123456
+    Web Click Element    ${btnLogin}
+    Web Element Text Should Be    ${lblTopbarDefaultPage}    ${Default}
+    Web Capture Screen At Verify Point    Varify login success
+    [Teardown]    Keywords For TearDown

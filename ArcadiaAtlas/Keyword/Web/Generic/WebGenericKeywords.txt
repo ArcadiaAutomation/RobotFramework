@@ -75,3 +75,11 @@ Web Element Attribute Should Match Regexp
 Open Web Browser
     [Arguments]    ${web}    ${browser}=ff
     Selenium2Library.Open Browser    ${web}    ${browser}
+
+Web Scroll Web To Element
+    [Arguments]    ${locator}    ${timeout}=${lo_general_timeout}
+    Selenium2Library.Wait Until Element Contains    ${locator}    ${timeout}
+    ${target}=    Selenium2Library.Get Vertical Position    ${locator}
+    ${width}=    ${height}=    Selenium2Library.Get Element Size    ${locator}
+    ${element}=    Evaluate    ${target}-150
+    Run Keyword If    ${element}<0    Execute Javascript    window.scrollTo(0, 0)    Execute Javascript    window.scrollTo(0, ${element})
