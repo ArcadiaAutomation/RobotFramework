@@ -1,6 +1,7 @@
 *** Settings ***
 Resource          ../../../Common/RedefineMobileKeywords.txt
 Resource          ../${ar_OS}/MobileGenericKeywords.txt
+Library          String
 
 *** Keywords ***
 Mobile Get Element Name
